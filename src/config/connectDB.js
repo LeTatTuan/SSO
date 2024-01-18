@@ -1,9 +1,14 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 // Option 3: Passing parameters separately (other dialects)
-const sequelize = new Sequelize('jwt', 'root', null, {
-    host: 'localhost',
-    dialect: 'mysql'
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, null, {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
+    logging: false,
+    define: {
+        freezeTableName: true
+    },
 });
 
 const connection = async () => {

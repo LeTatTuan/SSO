@@ -6,8 +6,12 @@ const handleHelloWord = (req, res) => {
 
 const handleUserPage = async (req, res) => {
     //model => get data from database
-    let userList = await userService.getUserList();
-    return res.render("user.ejs", { userList });
+    try {
+        let userList = await userService.getUserList();
+        return res.render("user.ejs", { userList });
+    } catch (error) {
+        console.log('Error: ', error.message);
+    }
 }
 
 const handleCreateNewUser = (req, res) => {
