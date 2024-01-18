@@ -15,7 +15,7 @@ const configPassport = () => {
             if (res && res.EC === 0) {
                 return done(null, res.DT);
             } else {
-                return done(null, false, req.flash('data', [res.EM, username, res.EC]));
+                return done(null, false, { message: res.EM });
             }
         }));
 }
