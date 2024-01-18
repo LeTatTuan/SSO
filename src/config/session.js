@@ -12,6 +12,7 @@ const configSessison = (app) => {
         define: {
             freezeTableName: true
         },
+        timezone: '+07:00',
     });
 
     const myStore = new SequelizeStore({
@@ -24,17 +25,21 @@ const configSessison = (app) => {
             store: myStore,
             resave: false, // we support the touch method so per the express-session docs this should be set to false
             saveUninitialized: false,
-            proxy: true, // if you do SSL outside of node.
+            proxy: true, // if you do SSL outside of node.,
+            expiration: 300 * 1000,
+            cookie: { expires: 300 * 1000 },
         })
     );
 
-    myStore.sync();
+    myStore.sync({
+        clearExpired: true,
+    });
 
     app.use(passport.authenticate('session'));
 
     passport.serializeUser(function (user, cb) {
         process.nextTick(function () {
-            cb(null, user);
+            return cb(null, user);
         })
     });
 
