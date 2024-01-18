@@ -1,4 +1,6 @@
 import session from 'express-session';
+import passport from 'passport';
+import Sequelize from 'sequelize';
 require('dotenv').config();
 
 const configSessison = (app) => {
@@ -12,17 +14,33 @@ const configSessison = (app) => {
         },
     });
 
+    const myStore = new SequelizeStore({
+        db: sequelize,
+    });
 
     app.use(
         session({
             secret: "keyboard cat",
-            store: new SequelizeStore({
-                db: sequelize,
-            }),
+            store: myStore,
             resave: false, // we support the touch method so per the express-session docs this should be set to false
+            saveUninitialized: false,
             proxy: true, // if you do SSL outside of node.
         })
     );
+
+    myStore.sync();
+
+    app.use(passport.authenticate('session'));
+
+    passport.serializeUser(function (user, cb) {
+        process.nextTick(function () {
+            cb(null, user);
+        })
+    });
+
+    passport.deserializeUser(function (user, cb) {
+        return cb(null, user);
+    })
 }
 
 export default configSessison;
