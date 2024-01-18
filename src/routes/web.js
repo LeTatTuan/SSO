@@ -4,6 +4,7 @@ import apiController from '../controller/apiController';
 import loginController from '../controller/loginController';
 import passport from "passport";
 import { isLogin } from '../middleware/checkUser';
+import passportController from "../controller/passportController";
 
 const router = express.Router();
 
@@ -24,13 +25,12 @@ const initWebRoutes = (app) => {
     //rest api
     //GET - R, POST- C, PUT - U, DELETE - D
     router.get("/api/test-api", apiController.testApi);
-
     router.get('/login', isLogin, loginController.getLoginPage);
-
     router.post('/login', passport.authenticate('local', {
         successRedirect: '/',
         failureRedirect: '/login'
     }));
+    router.post('/logout', passportController.handleLogout);
 
     return app.use("/", router);
 }

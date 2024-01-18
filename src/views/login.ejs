@@ -28,6 +28,10 @@
         cursor: pointer;
         padding: 0 10px;
     }
+
+    .login-container {
+        padding-top: 50px !important;
+    }
 </style>
 
 <body>
@@ -39,27 +43,43 @@
                         <legend class="float-none w-auto px-3">
                             Login
                         </legend>
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="username" aria-describedby="emailHelp"
-                                name="username">
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <hr />
-                        <div>
-                            <div style="text-align: center;">
-                                <span>or Login with:</span>
+                        <% if(error !="" ) { %>
+                            <div class="alert alert-danger my-1" role="alert">
+                                <%= error %>
                             </div>
-                            <div class="social" style="text-align: center;">
-                                <i class="bi bi-google" title="Login with google"></i>
-                                <i class="bi bi-facebook" title="Login with facebook"></i>
-                            </div>
-                        </div>
+                            <% } %>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Email address</label>
+                                    <div class="input-group has-validation">
+                                        <input type="email" class="form-control" id="username"
+                                            aria-describedby="emailHelp" name="username" required
+                                            value="<%= inputEmail %>">
+                                        <div class="invalid-feedback">
+                                            Please enter a email.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <div class="input-group has-validation">
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            required>
+                                        <div class="invalid-feedback">
+                                            Please enter a password.
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Login</button>
+                                <hr />
+                                <div>
+                                    <div style="text-align: center;">
+                                        <span>or Login with:</span>
+                                    </div>
+                                    <div class="social" style="text-align: center;">
+                                        <i class="bi bi-google" title="Login with google"></i>
+                                        <i class="bi bi-facebook" title="Login with facebook"></i>
+                                    </div>
+                                </div>
                     </fieldset>
                 </div>
             </form>
