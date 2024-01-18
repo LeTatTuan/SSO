@@ -7,6 +7,7 @@ import configCors from "./config/cors";
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { configPassport } from './controller/passportController';
+import configSessison from "./config/session";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -24,9 +25,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //config cookie -parser
 app.use(cookieParser());
 
-//test connection db
-// connection();
-
+//config session
+configSessison(app);
 
 //init web routes
 initWebRoutes(app);
@@ -37,6 +37,7 @@ app.use((req, res) => {
     return res.send('404 not found')
 });
 
+//config passport
 configPassport();
 
 app.listen(PORT, () => {
